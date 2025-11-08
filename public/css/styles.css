@@ -1,6 +1,286 @@
-/******* Change Box Model ***************/
+:root {
+  --primary-color: #343643;
+}
+
 *,
-*:before,
-*:after {
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#wrapper {
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 10px;
+}
+
+#top-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding: 0 1rem;
+  margin-block: 0.4rem 1rem;
+}
+
+nav {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  padding: 0.4rem;
+}
+
+#hero {
+  margin-top: 2rem;
+}
+
+.hero-content {
+  position: relative;
+}
+
+.hero-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.hero-text-box {
+  background-color: rgba(19, 19, 19, 0.8);
+  padding: 0.5rem;
+  max-width: 240px;
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  border-radius: 10px;
+  margin-top: 2rem;
+}
+
+.hero-text-box h3{
+  font-weight: 700;
+  color: #fff;
+}
+
+.hero-text-box p{
+  color:#fff;
+  font-weight: 500;
+}
+
+#own-btn {
+  display: inline-block;
+  background-color: #00A6D9;
+  padding: .5rem 1.2rem;
+  border-radius: 4px;
+  color: white;
+  font-weight: 600;
+  margin-top: .5rem;
+}
+
+.hero-img img {
+  width: 100%;
+  max-width: 600px;
+}
+
+#upgrades-section {
+  margin-top: 2rem;
+}
+
+.upgrades-wrapper {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2rem;
+}
+
+.upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.upgrade-grid a {
+  display: block;
+  text-align: center;
+}
+
+.upgrade-grid img {
+  width: 110px;
+  height: 110px;
+  object-fit: contain;
+}
+
+.right ul {
+  list-style: disc;
+  padding-left: 1.2rem;
+}
+
+.right li{
+  padding: 0.2rem 0;
+}
+
+@media (min-width: 600px) and (max-width: 1023px) {
+
+  body {
+    background-image: url("/images/site/small_check.jpg");
+  }
+
+  #wrapper {
+    max-width: 900px;
+    border: 4px solid #00a6d9;
+    padding: 1rem;
+    margin: 0 auto;
+  }
+
+  .siteName {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.4em;
+  }
+
+  #tools{
+    text-transform: uppercase;
+    font-size: 0.9em;
+  }
+
+  .hero-title{
+    font-size: 2rem;
+  }
+
+  .hero-text-box {
+    top: 20%;
+    left: 10%;
+  }
+
+  .hero-img img {
+    width: 90%;
+    margin-inline: auto;
+  }
+
+  .upgrades-wrapper {
+    flex-direction: row;
+    gap: 2rem;
+  }
+
+  .left,
+  .right {
+    flex: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+
+  body {
+    background-image: url("/images/site/checkerboard.jpg");
+  }
+
+  #wrapper {
+    max-width: 1200px;
+    border: 4px solid #00a6d9;
+    padding: 3rem 2rem;
+    margin: 0 auto;
+  }
+
+  .siteName {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.5em;
+  }
+
+  #tools {
+    text-transform: uppercase;
+    font-size: 1.2em;
+  }
+
+  .hero-title{
+    font-size: 4rem;
+  }
+
+  .hero-content{
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .hero-img{
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-img img{
+    max-width: 900px;
+    width: 80%;
+    height: auto;
+  }
+
+  .hero-text-box {
+    background-color: rgba(19, 19, 19, 0.8);
+    padding: 1rem;
+    max-width: 340px;
+    position: absolute;
+    top: 120px;
+    left: 0px;
+    border-radius: 10px;
+  }
+
+  .hero-text-box h3{
+    font-weight: 700;
+    color: #fff;
+    font-size: 1.7rem;
+  }
+
+  .hero-text-box p{
+    color:#fff;
+    font-weight: 500;
+    font-size: 1.4rem;
+  }
+
+  #own-btn {
+    display: inline-block;
+    background-color: #00A6D9;
+    padding: .5rem 1.2rem;
+    border-radius: 4px;
+    color: white;
+    font-weight: 600;
+    margin-top: .5rem;
+  }
+
+  .upgrades-wrapper{
+    display: grid;                 /* en lugar de flex row */
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: stretch;          /* misma altura */
+  }
+
+  .left, .right{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .upgrade-grid{ margin-top: .75rem; }
+
+.right ul {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+.right li{
+      font-size: 1.5rem;
+}
+}
+

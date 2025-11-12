@@ -258,10 +258,10 @@ nav ul {
   }
 
   .upgrades-wrapper{
-    display: grid;                 /* en lugar de flex row */
+    display: grid;                 
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-    align-items: stretch;          /* misma altura */
+    align-items: stretch;          
   }
 
   .left, .right{

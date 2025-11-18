@@ -57,4 +57,51 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+
+
+/* ****************************************
+ * Build HTML for vehicle detail view
+ **************************************** */
+Util.buildVehicleDetail = function(vehicle) {
+
+  let priceFormatted = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(vehicle.inv_price)
+
+  let milesFormatted = new Intl.NumberFormat("en-US")
+    .format(vehicle.inv_miles)
+
+  return `
+    <section id="vehicle-detail">
+
+      <img class="vehicle-img"
+           src="${vehicle.inv_image}"
+           alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+
+      <div class="vehicle-info">
+
+        <h2>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h2>
+
+        <p class="price">${priceFormatted}</p>
+
+        <p><strong>Mileage:</strong> ${milesFormatted} miles</p>
+
+        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+
+        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+
+      </div>
+
+    </section>
+  `
+}
+
+/* ****************************************
+ * Middleware For Handling Errors
+ * Wrap other function in this for 
+ * General Error Handling
+ **************************************** */
+Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
+
 module.exports = Util

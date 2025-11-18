@@ -12,6 +12,7 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const utilities = require("./utilities/")
 
 
 /* ***********************
@@ -32,7 +33,46 @@ app.use("/inv", inventoryRoute)
 // app.use("/", (req, res) => {
 // res.render("index", { title: "Home" });
 // });
-app.get("/", baseController.buildHome)
+app.get("/", utilities.handleErrors(baseController.buildHome))
+
+
+
+app.use(async (req, res, next) => {
+  next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
+
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+/* ***********************
+* Express Error Handler
+* Place after all other middleware
+*************************/
+app.use(async (err, req, res, next) => {
+  let nav = await utilities.getNav()
+  console.error(`Error at: "${req.originalUrl}": ${err.message}`)
+
+  let message
+  let img
+
+  if (err.status == 404) {
+    message = "Sorry, we appear to have lost that page."
+    img = "/images/site/404error.gif"
+  } 
+  else {
+    message = "Yikes! Something went wrong on the server. Please try again or come back later."
+    img = "/images/site/500error.gif"
+  }
+
+  res.render("errors/error", {
+    title: err.status || "Server Error",
+    message,
+    nav,
+    img
+  })
+})
+
 
 
 /* ***********************

@@ -1,0 +1,25 @@
+<section class="error-container">
+
+  <h1 class="error-title"><%= title %></h1>
+
+  <p class="error-subtitle">
+    Oops... something went wrong. But at least the server noticed 
+  </p>
+
+  <div class="error-image-wrapper">
+    <img 
+      src="<%= img %>" 
+      alt="Error animation"
+      class="error-image"
+    >
+  </div>
+
+  <div class="error-message">
+    <%- message %>
+  </div>
+
+  <p class="error-link">
+    <a href="/" title="Return to home page">Return to Home</a>
+  </p>
+
+</section>

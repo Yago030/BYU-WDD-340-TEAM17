@@ -411,3 +411,123 @@ nav ul {
     text-align: center;
   }
 }
+
+ul.notice {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+  padding: 12px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  list-style: none;
+}
+
+ul.notice li { margin: 0; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10px; 
+  background-color: white; 
+}
+
+.form-grid label {
+  font-weight: bold;
+  margin-bottom: 0.2rem;
+  display: block;
+}
+
+.form-grid input[type="text"],
+.form-grid input[type="number"],
+.form-grid textarea,
+.form-grid select {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.form-grid input[type="text"]:focus,
+.form-grid input[type="number"]:focus,
+.form-grid textarea:focus,
+.form-grid select:focus {
+  border-color: #00A6D9;
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 166, 217, 0.25);
+}
+
+.form-grid textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.primary-button {
+  display: inline-block;
+  background-color: #00A6D9;
+  color: white;
+  padding: .5rem 1.2rem; 
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+  font-weight: 600; 
+}
+
+.primary-button:hover {
+  background-color: #008cba;
+}
+
+.management-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.management-links li {
+  list-style: none;
+  padding: 0;
+}
+
+.management-links a {
+  display: block;
+  padding: 1rem;
+  background-color: #f1f1f1; 
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--primary-color); 
+  transition: background-color 0.2s ease;
+}
+
+.management-links a:hover {
+  background-color: #e5e5e5;
+}
+
+.error {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+  padding: 12px 15px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  list-style: none; 
+}
+
+.error ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.error li {
+  margin: 0;
+}

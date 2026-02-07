@@ -3,17 +3,20 @@
         {
             "pgOptions": {
                 "ssl": {
-                    "rejectUnauthorized": false
+                    "rejectUnauthorized": true
                 }
             },
             "ssh": "Disabled",
             "previewLimit": 50,
-            "server": "dpg-d49sv1jipnbc73997s9g-a.oregon-postgres.render.com",
+            "server": "dpg-d5ob1j7gi27c73ej2me0-a.oregon-postgres.render.com",
             "port": 5432,
+            "sshOptions": {
+                "port": 22
+            },
             "driver": "PostgreSQL",
-            "name": "database340sb4",
-            "database": "database340sb4",
-            "username": "database340sb4_user"
+            "name": "cse340-render",
+            "database": "cse340ssb",
+            "username": "cse340ssb"
         }
     ]
 }

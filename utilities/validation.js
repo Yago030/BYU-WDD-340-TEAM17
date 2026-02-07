@@ -1,4 +1,5 @@
 const { body, validationResult } = require("express-validator");
+const utilities = require(".")
 
 let validateClassification = [
 
@@ -9,16 +10,16 @@ let validateClassification = [
     .matches(/^[A-Za-z0-9]+$/)
     .withMessage("No spaces or special characters allowed."),
 
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      let nav = req.app.locals.nav
-
-      return res.render("inventory/add-classification", {
+      let nav = await utilities.getNav()
+      res.render("inventory/add-classification", {
         title: "Add Classification",
         nav,
         errors: errors.array(),
       })
+      return
     }
     next()
   }
@@ -40,35 +41,33 @@ const validateInventory = [
   body("inv_color").trim().isLength({ min: 1 }).withMessage("Color required."),
   body("classification_id").isInt().withMessage("Please choose a classification."),
 
-  (req, res, next) => {
+  async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-
+      let nav = await utilities.getNav()
       const {
         inv_make, inv_model, inv_year, inv_description,
         inv_image, inv_thumbnail, inv_price, inv_miles, inv_color, classification_id
       } = req.body
 
-      return utilities.buildClassificationList(classification_id)
-        .then((classificationList) => {
-          let nav = req.app.locals.nav
+      let classificationList = await utilities.buildClassificationList(classification_id)
 
-          res.render("inventory/add-inventory", {
-            title: "Add Inventory",
-            nav,
-            classificationList,
-            errors: errors.array(),
-            inv_make,
-            inv_model,
-            inv_year,
-            inv_description,
-            inv_image,
-            inv_thumbnail,
-            inv_price,
-            inv_miles,
-            inv_color
-          })
-        })
+      res.render("inventory/add-inventory", {
+        title: "Add Inventory",
+        nav,
+        classificationList,
+        errors: errors.array(),
+        inv_make,
+        inv_model,
+        inv_year,
+        inv_description,
+        inv_image,
+        inv_thumbnail,
+        inv_price,
+        inv_miles,
+        inv_color
+      })
+      return
     }
     next()
   }

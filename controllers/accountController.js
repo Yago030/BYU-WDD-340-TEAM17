@@ -17,6 +17,19 @@ async function buildLogin(req, res, next) {
 }
 
 /* ****************************************
+*  Deliver management view
+* *************************************** */
+async function buildManagement(req, res, next) {
+  let nav = await utilities.getNav()
+  res.render("account/management", {
+    title: "Account Management",
+    nav,
+    errors: null,
+  })
+}
+
+
+/* ****************************************
  *  Process login request
  * ************************************ */
 async function accountLogin(req, res) {
@@ -58,4 +71,5 @@ async function accountLogin(req, res) {
   }
 }
 
-module.exports = { buildLogin, accountLogin }
+module.exports = { buildLogin, accountLogin, buildManagement }
+

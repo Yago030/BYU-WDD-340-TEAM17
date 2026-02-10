@@ -29,15 +29,15 @@ async function buildRegister(req, res, next) {
 }
 
 
-/* ****************************************
-*  Deliver management view
-* *************************************** */
+async function buildManagement(req, res, next) {
+  let nav = await utilities.getNav()
   res.render("account/management", {
     title: "Account Management",
     nav,
     errors: null,
   })
 }
+
 
 /* ****************************************
 *  Deliver update account view
@@ -150,11 +150,11 @@ async function registerAccount(req, res) {
 }
 
 
-/* ****************************************
- *  Process Logout
- * *************************************** */
+async function accountLogout(req, res) {
+  res.clearCookie("jwt")
   res.redirect("/")
 }
+
 
 /* ****************************************
 *  Process Account Update

@@ -12,9 +12,12 @@ const app = express();
 const static = require("./routes/static");
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const accountRoute = require("./routes/accountRoute")
+
 const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require('./database/')
+const cookieParser = require("cookie-parser")
 
 /* ***********************
 * View Engine and Templates
@@ -33,6 +36,8 @@ const pool = require('./database/')
   saveUninitialized: true,
   name: 'sessionId',
 }))
+app.use(cookieParser())
+
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
@@ -57,6 +62,8 @@ app.set("layout", "./layouts/layout");
 app.use(express.static("public"))
 app.use(static);
 app.use("/inv", inventoryRoute)
+app.use("/account", accountRoute)
+
 
 
 // app.use("/", (req, res) => {

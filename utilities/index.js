@@ -1,4 +1,7 @@
 const invModel = require("../models/inventory-model")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
+
 const Util = {}
 
 /* ************************
@@ -62,7 +65,7 @@ Util.buildClassificationGrid = async function(data){
 /* ****************************************
  * Build HTML for vehicle detail view
  **************************************** */
-Util.buildVehicleDetail = function(vehicle) {
+Util.buildVehicleDetail = function(vehicle, loggedin = false, isFavorite = false) {
 
   let priceFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -71,6 +74,15 @@ Util.buildVehicleDetail = function(vehicle) {
 
   let milesFormatted = new Intl.NumberFormat("en-US")
     .format(vehicle.inv_miles)
+
+  let wishlistBtn = ""
+  if (loggedin) {
+    if (isFavorite) {
+      wishlistBtn = `<a href="/account/wishlist/remove/${vehicle.inv_id}" class="primary-button remove-btn">Remove from Wishlist</a>`
+    } else {
+      wishlistBtn = `<a href="/account/wishlist/add/${vehicle.inv_id}" class="primary-button">Add to Wishlist</a>`
+    }
+  }
 
   return `
     <section id="vehicle-detail">
@@ -91,11 +103,37 @@ Util.buildVehicleDetail = function(vehicle) {
 
         <p><strong>Color:</strong> ${vehicle.inv_color}</p>
 
+        <div class="wishlist-action">
+          ${wishlistBtn}
+        </div>
+
       </div>
 
     </section>
   `
 }
+
+
+/* **************************************
+ * Build a grid of vehicles in the wishlist
+ * ************************************ */
+Util.buildWishlistGrid = async function(data) {
+  let grid
+  if (data.length > 0) {
+    grid = '<ul id="wishlist-display" class="management-links">'
+    data.forEach(vehicle => {
+      grid += '<li>'
+      grid += '<a href="/inv/detail/' + vehicle.inv_id + '">' + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+      grid += '<a href="/account/wishlist/remove/' + vehicle.inv_id + '" class="remove-btn">Remove</a>'
+      grid += '</li>'
+    })
+    grid += '</ul>'
+  } else {
+    grid = '<p class="notice">You have no items in your wishlist.</p>'
+  }
+  return grid
+}
+
 
 /* **************************************
 * Build the classification select list HTML 
@@ -126,4 +164,52 @@ Util.buildClassificationList = async function (classification_id = null) {
  **************************************** */
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
+/* ****************************************
+* Middleware to check token validity
+**************************************** */
+Util.checkJWTToken = (req, res, next) => {
+ if (req.cookies.jwt) {
+  jwt.verify(
+   req.cookies.jwt,
+   process.env.ACCESS_TOKEN_SECRET,
+   function (err, accountData) {
+    if (err) {
+     req.flash("Please log in")
+     res.clearCookie("jwt")
+     return res.redirect("/account/login")
+    }
+    res.locals.accountData = accountData
+    res.locals.loggedin = 1
+    next()
+   })
+ } else {
+  next()
+ }
+}
+
+/* ****************************************
+ *  Check Login
+ * ************************************ */
+  Util.checkLogin = (req, res, next) => {
+   if (res.locals.loggedin) {
+     next()
+   } else {
+     req.flash("notice", "Please log in.")
+     return res.redirect("/account/login")
+   }
+  }
+
+  /* ****************************************
+  *  Check Admin or Employee Role
+  * ************************************ */
+  Util.checkAdminOrEmployee = (req, res, next) => {
+    if (res.locals.loggedin && (res.locals.accountData.account_type === 'Employee' || res.locals.accountData.account_type === 'Admin')) {
+      next()
+    } else {
+      req.flash("notice", "Access forbidden. You do not have permission to access this resource.")
+      return res.redirect("/account/login")
+    }
+  }
+
 module.exports = Util
+

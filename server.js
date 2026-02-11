@@ -48,6 +48,8 @@ app.use(function(req, res, next){
 
 app.use(express.json())                       
 app.use(express.urlencoded({ extended: true }))
+app.use(utilities.checkJWTToken)
+
 
 app.set("view engine", "ejs");
 app.use(expressLayouts);

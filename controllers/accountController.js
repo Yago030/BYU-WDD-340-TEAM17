@@ -31,12 +31,19 @@ async function buildRegister(req, res, next) {
 
 async function buildManagement(req, res, next) {
   let nav = await utilities.getNav()
+  
+  const wishlistModel = require("../models/wishlist-model")
+  const wishlistData = await wishlistModel.getWishlistByAccountId(res.locals.accountData.account_id)
+  const wishlistHtml = await utilities.buildWishlistGrid(wishlistData)
+
   res.render("account/management", {
     title: "Account Management",
     nav,
     errors: null,
+    wishlistHtml,
   })
 }
+
 
 
 /* ****************************************

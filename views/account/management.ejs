@@ -17,6 +17,10 @@
   <li><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></li>
 </ul>
 
+<h3>My Wishlist</h3>
+<%- wishlistHtml %>
+
+
 <% if (accountData.account_type === 'Employee' || accountData.account_type === 'Admin') { %>
 
   <h3>Inventory Management</h3>

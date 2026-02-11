@@ -26,8 +26,14 @@ invCont.buildByInvId = async function (req, res, next) {
   const inv_id = req.params.inv_id
   const vehicleData = await invModel.getInventoryById(inv_id)
   const nav = await utilities.getNav()
+  
+  let isFavorite = false
+  if (res.locals.loggedin) {
+    const wishlistModel = require("../models/wishlist-model")
+    isFavorite = await wishlistModel.checkFavorite(res.locals.accountData.account_id, inv_id)
+  }
 
-  const detail = await utilities.buildVehicleDetail(vehicleData)
+  const detail = await utilities.buildVehicleDetail(vehicleData, res.locals.loggedin, isFavorite)
 
   const itemName = `${vehicleData.inv_make} ${vehicleData.inv_model}`
 
@@ -37,6 +43,7 @@ invCont.buildByInvId = async function (req, res, next) {
     detail
   })
 }
+
 
 invCont.buildAddClassification = async function (req, res, next) {
   console.log("Función buildAddClassification llamada!")

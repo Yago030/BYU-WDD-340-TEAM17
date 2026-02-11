@@ -43,6 +43,11 @@ router.post(
   utilities.handleErrors(accountController.updatePassword)
 )
 
+// Wishlist Routes
+const wishlistController = require("../controllers/wishlistController")
+router.get("/wishlist/add/:inv_id", utilities.checkLogin, utilities.handleErrors(wishlistController.addFavorite))
+router.get("/wishlist/remove/:inv_id", utilities.checkLogin, utilities.handleErrors(wishlistController.removeFavorite))
 
 module.exports = router
+
 
